@@ -1,0 +1,6 @@
+data/
+yahoo_data/
+__pycache__/
+*.pyc
+jupyter/
+reports/
