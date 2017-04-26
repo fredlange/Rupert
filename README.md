@@ -13,4 +13,6 @@ You need to make your on data handler to download and send data as a pandas data
 
 
 ## Run
-Just execute RupertCron.py. Many errors may arise as this is an old version and will not download dependancies. 
+Create a folder in root named "yahoo_data" then execute RupertCron.py using Python 3.
+You may get errors if you cannot supply atleast 20 days of data.
+If you add any other stock tickers than OMX-ST-30 you need to run batch_analysis.py to generate training data using atleast 50+ days of data.
