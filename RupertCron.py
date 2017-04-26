@@ -4,7 +4,7 @@ import RupertReport as rr
 import RupertMail
 
 def cron():
-    ydh.collect_batch_data('OMX-ST.txt')
+    ydh.collect_batch_data('OMX-ST-30.txt')
     rr.runReport('Stocklists/OMX-ST-30.txt')
     RupertMail.sendEmailToAdmin("Download CSV data complete", "CSV archive has been updated. \n // Rupert")
 

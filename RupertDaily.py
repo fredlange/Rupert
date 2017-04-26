@@ -36,7 +36,7 @@ taskRegister={
                             'Saturday': None,
                             'Sunday':None
                             },
-                            {'stocklist':'OMX-ST.txt'}],
+                            {'stocklist':'OMX-ST-30.txt'}],
     # "Debugging":[debug, {'Wednesday':9}]
 }
 
