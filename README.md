@@ -1,6 +1,6 @@
 # Rupert Analytics
 Using machine learning to determine daily growth in stocks.
-Rupert answers the question "If I want to make a 1% ROI today. What should I by and when?"
+Rupert answers the question "If I want to make a 1% ROI today. What should I by and when?" it will also provide you with the accuracy of its prediction.
 
 ## Notice: This is an early prototype that is outdated. Any trades are on your own risk!
 
