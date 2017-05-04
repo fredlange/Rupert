@@ -20,5 +20,6 @@ def sendEmailToAdmin(subject, message):
         smtpObj.sendmail(sender, receivers, content)
         smtpObj.quit()
 
+    # TODO: Setup proper exeption hanlding
     except SMTPException:
        pass

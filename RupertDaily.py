@@ -48,9 +48,11 @@ if __name__ == '__main__':
         currentHour = datetime.datetime.today().hour
         currentMin = datetime.datetime.today().minute
         print("TIME: " + str(currentHour) +":"+str(currentMin))
+
+        # Reset the que @ 01:00
         if 2 > currentHour >= 1:
             tasks.resetQue()
             print("Que was reset!")
 
-        # Sleep for _some_ time
+        # Sleep for _some_ time before checking for tasks.
         time.sleep(60*20) # Seconds

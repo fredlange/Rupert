@@ -15,7 +15,8 @@ import RupertMail
 
 def download_data(stock):
     """
-    Download 10 day data for 'stock'
+    Download 10 day data for 'stock' from yahoo chart api.
+    Store data in yahoo_data/STOCK_NAME/DATE.csv
     """
     date = time.strftime("%Y%m%d", time.localtime())
     file_path = 'yahoo_data/'+stock+'/'+date+'.csv'
@@ -24,8 +25,11 @@ def download_data(stock):
             print("Data does not exists, pulling data for:", stock)
             urlToVisit = 'http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=10d/csv'
             pull_data = pd.read_csv(urlToVisit, header=27, index_col=0)
-            try: os.mkdir('yahoo_data/' + str(stock))
-            except FileExistsError: pass
+            try:
+                os.mkdir('yahoo_data/' + str(stock))
+            # If the file already exists it is safe to pass
+            except FileExistsError:
+                pass
             pull_data.to_csv(file_path, header=True)
             print('Sleeping to avoid DDoS')
             time.sleep(0.5)
@@ -37,6 +41,9 @@ def download_data(stock):
         print(msg)
 
 def collect_batch_data(stocklist):
+    """
+    Download 10 day data for all stocks in a stocklist
+    """
     import RupertCore as rc
     print("Collecting stock data in batch")
     batch = rc.batch_stock('Stocklists/'+stocklist)
@@ -44,10 +51,10 @@ def collect_batch_data(stocklist):
         download_data(i)
     print("Batch collecting...DONE")
 
-
 def getDataFrame_prototype(stock, start_date=False, look_back=10, full_data = False, complete_data=False):
     """ PROTOTYPE
     Get list of pandas dataframes containing 'look_back' number of days from (TBA) 'start_date' date.
+    NOTICE: This fuction has been replaced by getStockData but this change is not yet implemented.
 
     parameters:
     stock: select a stock (required)
@@ -116,7 +123,7 @@ def getDataFrame_prototype(stock, start_date=False, look_back=10, full_data = Fa
         print("OSError:", msg)
 
 
-## DATABASE DEPENDENT FUNCTIONS
+## SQL DATABASE FUNCTIONS
 
 def getStocklist():
     """
@@ -141,10 +148,12 @@ def collectStreamData(stock):
     except pd.io.common.CParserError:
         print("Stock ticker cannot be found:", stock)
 
-
 def addDataToDatabase():
     """
     Download all data more recent than the data present in the database.
+    Store all new data in the database
+    Note: Verifing if the data is new or not should probably an own function
+    to reduce the rows of this function
     """
     stockList = getStocklist()
     main_startTime = time.time()
@@ -228,7 +237,7 @@ def getStockData(stock, fromDate=False, fullData=False, lookBack=10, legacy=Fals
     fullData: Default False = Use all avalable data
     lookBack: Select number of days to return data fromDate
     legacy: modify function to work with older functions
-    unsplit: Return a single dataframe rather than one dataframe for each day
+    TODO: unsplit: Return a single dataframe rather than one dataframe for each day
     """
     #import RupertCore as rc
     conn = sqlite3.connect('data/StockData.db')
