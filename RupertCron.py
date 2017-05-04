@@ -1,4 +1,9 @@
+
+
 ## Cronjob
+
+
+
 import yahoo_data_handler as ydh
 import RupertReport as rr
 import RupertMail

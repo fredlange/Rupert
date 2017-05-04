@@ -17,10 +17,10 @@ Clone the entire repository.
 
 Create two folders in root: "yahoo_data" and "reports"
 
+Open RupertMail.py and make adjustments so that Rupert may send emails.
+
 Then execute RupertDaily.py using Python3. The script needs to run for atleast 20 days (it will download data daily) before running a report using RupertCron.py.
 
 For demonstration purposes a default training data is supplied using maximum of 10 days data. This is not ideal and will not give the best result but will allow for the program to run.
 If you add any other stock tickers than OMX-ST-30 you need to run batch_analysis.py to generate training data using atleast 50+ days of data.
 Rupert will not download dependancies you will have to do that yourself using PIP or similar.
-
-
