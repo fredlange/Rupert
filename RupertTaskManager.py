@@ -48,6 +48,7 @@ class taskQue():
         self.taskRegister = taskRegister
         self.taskQue = []
 
+
     def renderTaskQue(self):
         """
         Create a list of task objects
@@ -76,12 +77,9 @@ class taskQue():
                 RupertMail.sendEmailToAdmin(subj, errorMsg)
                 print(subj, e)
 
-    def getQue(self):
-        return self.taskQue
-
     def resetQue(self):
         # Check if all tasks are complete
-        todo = [1 if task.jobDone == False else 0 for task in self.getQue()]
+        todo = [1 if task.jobDone == False else 0 for task in self.taskQue]
         done = True if todo.count(0) == len(todo) else False
 
         if done == True:
