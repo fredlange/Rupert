@@ -77,6 +77,7 @@ def batch_analysis(stocks, section=10):
                 obj = [data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in vectors]
 
                 # Filter to only interesting vectors
+                # TODO: Replace with numpy
                 x_begin = [vect._xID if vect._lambda > 0.01 else None for vect in obj]
                 try:
                     while True: x_begin.remove(None)
@@ -101,7 +102,6 @@ def batch_analysis(stocks, section=10):
                 array['VECT'].append(len(x_begin))
 
         except Exception as msg:
-            #print("ERROR",stock,":", msg)
             log_event("ERROR (batch_analysis): " + stock + ": " + str(msg))
 
     # Create DataFrame
@@ -180,7 +180,8 @@ def performance_of_batch(stocks, section=10, export_csv = False):
             pArr['EPSILON'].append(epsilon)
 
 
-        # Ignore KeyError as a simple bug fix
+        # Ignore KeyError as hacky workaround.
+        # TODO: Dont do this...
         except KeyError:
             pass
 
@@ -227,12 +228,9 @@ def variate_section_analysis(stock, sect_int):
 
     return df
 
-#print(variate_section_analysis('SSAB-A.ST', sect_int=(5,6)))
-
 def batch_variate_section_analysis(stocks, sect_int = (4,13), export_csv=False):
     """
     Find the number of section that provides the greatest accuracy in batch.
-    Alpha from 2017-01-18
     """
     array = {'STOCK':[],'SECTION':[], 'MAN ACCURACY':[]}
     try:
@@ -255,11 +253,8 @@ def batch_variate_section_analysis(stocks, sect_int = (4,13), export_csv=False):
         if export_csv == True:
             df.to_csv('csv/batch_variate_section_analysis_'+date+'.csv')
 
+    # TODO: Dont do this...
     except KeyError:
         pass
 
     return df
-
-#stocks = batch_stock('Stocklists/OMX-ST-30.txt')
-# stocks = ['SSAB-A.ST','NOKI.ST']
-# print(batch_variate_section_analysis(stocks, sect_int=(5,6), export_csv=True))

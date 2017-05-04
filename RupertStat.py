@@ -2,14 +2,16 @@ import RupertCore as rc
 import numpy as np
 
 def lambda_stat(stock, section, from_day=False):
+    """
+    Initial analysis to find the existance of interesting vectors in dataset.
+    """
     print("\nFinding lambda statistic of", stock, "with", section, "sections")
 
     if from_day == False:
         data, data_dict = rc.data_sectionalized(stock, section)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
     else:
         data, data_dict = rc.data_sectionalized(stock, section, from_day)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
+    obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
 
     print("Calculating statistics...")
     final_result = []
@@ -39,19 +41,20 @@ def lambda_stat(stock, section, from_day=False):
 
 
 def mean_method(stock, section, from_day=False):
+    """
+    Statistical analysis to find the mean of vector starting points
+    """
     print("Finding time density distribution of", stock, "with", section, "sections")
 
-    ## Gather data
     if from_day == False:
         data, data_dict = rc.data_sectionalized(stock, section)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
     else:
         data, data_dict = rc.data_sectionalized(stock, section, from_day)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
+    obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
 
     start_density = []
     for i in data_dict.keys():
-        # Only get the interesting xID's mark rest as outrunners.
+        # Only get the interesting xID's mark rest as outlier.
         xID = np.array([vect._xID if vect._lambda > 0.01 and vect._ds == i else 99999999999 for vect in obj])
         xID = xID[xID < 99999999999].tolist()   # Remove outrunners
         start_density.append(xID)

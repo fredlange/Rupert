@@ -1,24 +1,24 @@
 # Find time density by voting for starting values...
 
 from yahoo_data_handler import *
-#from RupertCore import *
 import RupertCore as rc
 import pandas as pd
 import matplotlib.pyplot as plt
 
 def mandate_method(stock, section=10, from_day=False):
     """
-    experimental function using a mandate method to determine best investent time.
+    Experimental function using a mandate method to determine best investent time.
+    This method finds the most populated starting point of vectors by 'voting'
+    for each starting point every time a vector exists
     """
     print("*experimental* Finding time using mandate method distribution of", stock, "with", section, "sections")
 
     ## Gather data
     if from_day == False:
         data, data_dict = rc.data_sectionalized(stock, section)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
     else:
         data, data_dict = rc.data_sectionalized(stock, section, from_day)
-        obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
+    obj = [rc.data_vectors(i[0],i[1],i[2],i[3],i[4],i[5]) for i in data]
 
     start_density = []
     for i in data_dict.keys():

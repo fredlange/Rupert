@@ -1,3 +1,6 @@
+"""
+Main collection of utility functions for Rupert
+"""
 import matplotlib.pyplot as plt
 import random
 from math import sqrt
@@ -12,6 +15,9 @@ import pickle
 import RupertStat as rstat
 
 class data_vectors():
+    """
+    Create regular vectors with some additional information
+    """
     def __init__(self, x1, x2, y1, y2, ds,xID):
         self._x1 = x1   # datetime64
         self._x2 = x2   # datetime64
@@ -51,6 +57,7 @@ def log_event(msg):
 def batch_stock(filename):
     """
     Creates a list of stocks from a stocklist-file.
+    Note: Replaced by getStocklist in yahoo_data_handler
     """
     try:
         with open(filename, "r") as file:
@@ -60,7 +67,7 @@ def batch_stock(filename):
 
 def vectorAppend(values, period, dataSet, plot=False):
     """
-    Create vector patterns for each dataset
+    Create vectors for each dataset
     """
     try:
         vectors = []
@@ -81,9 +88,12 @@ def vectorAppend(values, period, dataSet, plot=False):
 
     except Exception as msg:
         print(msg)
-        return None
 
 def data_sectionalized(stock, sections=10, from_day=False):
+    """
+    Fetches data from database and return a list and a dictionary
+    of vector objects.
+    """
     try:
         if from_day == False:
             data = getStockData(stock, lookBack = sections, legacy=True)
@@ -104,7 +114,6 @@ def data_sectionalized(stock, sections=10, from_day=False):
     except Exception as msg:
         print("DATA_SECTIONALIZE: " + str(msg))
 
-
 def select_latest_file(dir):
     """
     Return file path of latest created file in 'dir' directory.
@@ -115,7 +124,6 @@ def select_latest_file(dir):
     latest = sorted(file_tuple, key=lambda modified: modified[0])[-1][-1]
 
     return latest
-
 
 def evaluate_stocklist():
     """
@@ -152,6 +160,9 @@ def evaluate_stocklist():
         print("All segments done.")
 
 def reporting():
+    """
+    Create a report of analysis and store it in /reports/DATE.csv
+    """
     print("Preparing report")
     date = time.strftime("%Y%m%d", time.localtime())
     from_path = 'evaluations/RupertCore '+date+'.csv'
@@ -167,12 +178,12 @@ def reporting():
     print("Report saved at:", to_path)
 
 
-def unixTimeToDate(UNIXTIME):
+def unixTimeToDate(unixTimeStamp):
     """
     Inputs an UNIX timestamp
-    Returns int date
+    Returns string date
     Ex: unixTimeToDate(1478594163)
     Return 20161108
     """
-    dt = datetime.datetime.fromtimestamp(UNIXTIME)
+    dt = datetime.datetime.fromtimestamp(unixTimeStamp)
     return dt.strftime('%Y%m%d')

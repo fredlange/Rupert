@@ -7,20 +7,23 @@ import time
 
 def runReport(stocklist):
     stocks = rc.batch_stock(stocklist)
+
+    # These files are not suppose to be hardcoded, demo only.
     init_d1 = pd.read_csv('csv/batch_variate_section_analysis_20170120.csv', index_col='STOCK')
-    init_d1.drop(['Unnamed: 0'], axis=1, inplace=True)
     init_d2 = pickle.load(open('pickle/performance_of_batch/20170112.p', 'rb'))
+
+    init_d1.drop(['Unnamed: 0'], axis=1, inplace=True)
     init_data = pd.concat([init_d1, init_d2], join='inner', axis=1)
     init_data['EPSILON'] = init_data['AVG R#'] / init_data['MAN ACCURACY'] - init_data['AVG STDDEV']
-
 
     array = {'STOCK': [],'R#':[], 'Rmean':[] , 'MAN PRED':[], 'SIGMA':[], 'EPSILON':[], 'AVG ACC':[]}
 
     for stock in stocks:
-
         try:
             df = init_data.loc[stock]
             sec = int(df['SECTION'])
+
+            # Run Rupert calculations
             Rm, Rn = rstat.lambda_stat(stock, sec)
             mean_pred, sigma = rstat.mean_method(stock, sec)
             pred = Exp_mm.mandate_method(stock, sec)[0]

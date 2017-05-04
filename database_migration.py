@@ -1,5 +1,7 @@
-## This file contains functions to migrate all stock data from CSV data storage to SQLite
-## Run this file as it is and make sure to direct to the correct folders
+"""
+This file contains functions to migrate all stock data from CSV data storage to SQLite
+Run this file as it is and make sure to direct to the correct folders
+"""
 
 import sqlite3
 import pandas as pd
@@ -59,7 +61,8 @@ try:
     issues_str = "\n".join(issues)
     print("ISSUES \n", issues_str)
 
-
+# If there are other files that are not folders
+# then simply ignore them, they are not valid data
 except NotADirectoryError:
     pass
 

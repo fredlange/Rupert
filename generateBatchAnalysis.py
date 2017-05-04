@@ -5,12 +5,15 @@ import pickle
 import pandas as pd
 
 def generateBatchAnalysis():
+    """
+    Run batch analysis and generate a pickle to store the result
+    """
     stocks = rc.batch_stock('Stocklists/OMX-ST-30.txt')
     #stocks = ['NOKI.ST', 'TOBII.ST']
 
     # Find the number of sections which gives best result
+    # The interval may be changed depending on how much data is available
     df = ba.batch_variate_section_analysis(stocks, sect_int = (4,13))
-    #df = pickle.load(open(rc.select_latest_file('pickle/batch_variate_section_analysis'), 'rb'))
     df.set_index(['STOCK'], inplace=True)
 
     # Define learning array
@@ -33,6 +36,7 @@ def generateBatchAnalysis():
                 rc.log_event(stock + ' zero standard deviation')
 
         # Ignore stock if in stocklist but cannot be calculated due to some issues.
+        # TODO: Dont do this...
         except KeyError:
             pass
 
@@ -45,6 +49,6 @@ def generateBatchAnalysis():
     pickle.dump(df, open('pickle/learning/current_set.p', 'wb'))
 
     print("Loading from pickle...")
-
     loaded_df = pickle.load(open('pickle/learning/current_set.p', 'rb'))
+
     print("Loaded df \n", loaded_df)
