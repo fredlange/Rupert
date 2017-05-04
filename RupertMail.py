@@ -2,14 +2,12 @@
 
 import smtplib
 
-
-
 def sendEmailToAdmin(subject, message):
     sender = 'no-reply@rupert.io'
-    receivers = ['fredrik@uneedit.se']
+    receivers = ['LUKE@REBELSCUM.COM']
 
     from_str = "From: Rupert <%s> \n" % (sender)
-    to_str = "To: Fredrik Lange <fredrik@uneedit.se> \n"
+    to_str = "To: Luke Skywalker <LUKE@REBELSCUM.COM> \n"
     sub_str = "Subject: %s \n" % (subject)
     content = from_str + to_str + sub_str + message
 
